@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SKU目录智能富化 — 把乱码表格变成可上架商品</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap brand">
+      <span class="logo">SKU富化</span>
+      <nav>
+        <a href="#value">价值</a>
+        <a href="#demo">试用</a>
+        <a href="#pricing">定价</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="badge">建材 / 五金 / 工业品目录 · 本地 Demo</p>
+      <h1>SKU目录智能富化</h1>
+      <p class="lead">
+        上传杂乱的 Excel / CSV，自动清洗表头、补全属性、生成<strong>优化标题</strong>、<strong>SEO短描述</strong>与<strong>属性卖点</strong>——
+        让每一行 SKU 都能直接用于电商上架或主数据入库。
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#demo">立即试用</a>
+        <button type="button" class="btn ghost" id="btn-sample-hero">试用样例（建材SKU）</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="value" class="section">
+    <div class="wrap">
+      <h2>为什么需要富化？</h2>
+      <div class="grid3">
+        <div class="card">
+          <h3>表头一团乱</h3>
+          <p>「品名规格」「货号」「型号」混用，中英混杂。系统自动识别 SKU / 名称 / 品牌 / 规格等字段。</p>
+        </div>
+        <div class="card">
+          <h3>属性残缺</h3>
+          <p>从品名文本推断品类、品牌、直径、压力、材质等，结构化后便于筛选与比价。</p>
+        </div>
+        <div class="card">
+          <h3>无法直接上架</h3>
+          <p>一键生成可检索标题、SEO 短描述与属性卖点，输出干净 CSV 下载。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2>前后对比（示例）</h2>
+      <div class="compare">
+        <div class="card before">
+          <h3>Before · 原始行</h3>
+          <ul>
+            <li><code>货号</code>：BF-PPR-25</li>
+            <li><code>品名规格</code>：日丰PPR热水管 dn25*4.2 pn2.0 白色 4米</li>
+            <li><code>分类</code>：（空）</li>
+            <li><code>品牌</code>：（空）</li>
+          </ul>
+        </div>
+        <div class="card after">
+          <h3>After · 富化结果</h3>
+          <ul>
+            <li><strong>品牌</strong>：日丰 · <strong>品类</strong>：管材管件</li>
+            <li><strong>优化标题</strong>：日丰 PPR热水管 DN25 PN2.0 白色 管材管件</li>
+            <li><strong>结构化属性</strong>：公称直径=DN25；压力=2.0MPa；材质=PPR；颜色=白色；长度=4米</li>
+            <li><strong>SEO短描述</strong>：日丰品牌管材管件产品「PPR热水管」…适用于建筑工程、装修施工…</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="section">
+    <div class="wrap">
+      <h2>上传并富化</h2>
+      <p class="muted">支持 .xlsx / .csv（单次最多 500 行，超出将返回错误，不会静默截断）。也可直接试用内置建材样例。</p>
+
+      <div class="upload-panel card">
+        <div class="upload-actions">
+          <label class="btn primary file-btn">
+            选择文件
+            <input type="file" id="file-input" accept=".xlsx,.xls,.csv" hidden />
+          </label>
+          <button type="button" class="btn ghost" id="btn-sample">试用样例</button>
+          <a class="btn link" href="/api/sample-file" download>下载样例 xlsx</a>
+        </div>
+        <p id="file-name" class="muted">未选择文件</p>
+        <button type="button" class="btn primary" id="btn-run" disabled>开始富化</button>
+        <div id="status" class="status" hidden></div>
+      </div>
+
+      <div id="meta-box" class="card meta" hidden></div>
+
+      <div id="result-wrap" hidden>
+        <div class="result-toolbar">
+          <h3>预览结果 <span id="result-count" class="muted"></span></h3>
+          <a class="btn primary" id="btn-download" href="#">下载富化 CSV</a>
+        </div>
+        <div class="table-scroll">
+          <table id="result-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section alt">
+    <div class="wrap">
+      <h2>定价</h2>
+      <div class="pricing">
+        <div class="card price">
+          <h3>按量包</h3>
+          <p class="price-num">$49</p>
+          <p>/ 100 SKUs</p>
+          <p class="muted">适合小批量上架、试水目录清洗</p>
+        </div>
+        <div class="card price featured">
+          <h3>整批处理</h3>
+          <p class="price-num">$199</p>
+          <p>/ batch</p>
+          <p class="muted">适合整库导入、ERP / 电商一次性清洗</p>
+        </div>
+      </div>
+      <p class="cta-note">本页为本地 Demo。正式版可对接 LLM 进一步提升文案质量与多语言输出。</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">SKU目录智能富化 · Demo MVP · Yi Chen</div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
